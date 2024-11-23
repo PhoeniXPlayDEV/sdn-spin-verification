@@ -1,0 +1,29 @@
+never no_negative_rules {    /* !([] (((flow_entry_cont>=0)) && ((flow_entry_switch>=0)))) */
+T0_init:
+	do
+	:: atomic { (! ((((flow_entry_cont>=0)) && ((flow_entry_switch>=0))))) -> assert(!(! ((((flow_entry_cont>=0)) && ((flow_entry_switch>=0)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never no_deadlock {    /* !([] (<> (1))) */
+T0_init:
+	do
+	:: (! ((1))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((1))) -> goto accept_S4
+	od;
+}
+never no_errors {    /* !([] ((error_flag==0))) */
+T0_init:
+	do
+	:: atomic { (! (((error_flag==0)))) -> assert(!(! (((error_flag==0))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
